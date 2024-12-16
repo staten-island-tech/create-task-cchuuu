@@ -1,22 +1,19 @@
+import { GroceryItems } from "./products";
+import { DOMs } from "./DOM";
 import "../CSS/style.css";
-import { DOMselectors } from "./DOM";
 
-document.querySelector("#app").innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
+function displayCard() {
+  const randomNumber = Math.floor(Math.random() * GroceryItems.length);
+  const item = GroceryItems[randomNumber];
+
+  DOMs.container.insertAdjacentHTML(
+    "beforeend",
+    `
+    <div class="card w-2/5 h-[40vw] bg-peachpuff rounded-3xl flex flex-col items-center justify-evenly m-8 border-2 border-black">
+    <h1 class="text-5xl">${item.name}</h1>
+    <img src="${item.image}" alt="" class="w-[80%] object-contain rounded-lg shadow-md"/>
     </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`;
-
-setupCounter(document.querySelector("#counter"));
+    `
+  );
+}
+displayCard();

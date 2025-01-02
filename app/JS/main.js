@@ -3,16 +3,14 @@ import "../CSS/style.css";
 
 const DOMs = {
   container: document.querySelector(".container"),
-  addBtn: document.querySelector(".addBtn"),
-  nextBtn: document.querySelector(".nextBtn"),
-  showBtn: document.querySelector(".showBtn"),
-  clearBtn: document.querySelector(".clearBtn"),
 };
-function clear() {
+
+function refresh() {
   DOMs.container.innerHTML = "";
+  GroceryStore();
 }
 
-function displayCard() {
+function GroceryStore() {
   const randomNumber = Math.floor(Math.random() * GroceryItems.length);
   const item = GroceryItems[randomNumber];
 
@@ -32,19 +30,24 @@ function displayCard() {
     </div>
     `
   );
-
-  DOMs.nextBtn.addEventListener("click", () => {
-    console.log("Hi");
-    clear();
-    displayCard();
+  const nextBtn = document.querySelector(".nextBtn");
+  nextBtn.addEventListener("click", () => {
+    refresh();
   });
-}
-displayCard();
 
-function addingToCart() {
-  DOMs.addBtn.addEventListener("click", () => {
+  const addBtn = document.querySelector(".addBtn");
+  addBtn.addEventListener("click", () => {
     const cart = [];
     cart.push(item);
+    refresh();
+    console.log(cart);
+  });
+
+  const clearBtn = document.querySelector(".clearBtn");
+  clearBtn.addEventListener("click", () => {
+    cart = "";
   });
 }
-addingToCart();
+GroceryStore();
+
+console.log(cart);

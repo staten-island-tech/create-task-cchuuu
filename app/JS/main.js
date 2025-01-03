@@ -1,8 +1,11 @@
 import { GroceryItems } from "./products";
 import "../CSS/style.css";
 
+const cart = [];
+
 const DOMs = {
   container: document.querySelector(".container"),
+  cartcontainer: document.querySelector(".cart-container"),
 };
 
 function refresh() {
@@ -22,9 +25,7 @@ function GroceryStore() {
       <img src="${item.image}" alt="" class="w-[70%] h-[60%] object-fill rounded-lg shadow-md"/>
         <div class="m-0">
           <button class="addBtn w-32 h-10 bg-gray-200 rounded-lg text-black text-center font-semibold text-xl">Add to Cart!</button>
-          <button class="nextBtn w-32 h-10 bg-gray-200 rounded-lg text-black text-center font-semibold text-xl">Next Item</button>
-          <button class="showBtn w-32 h-10 bg-gray-200 rounded-lg text-black text-center font-semibold text-xl">Show Cart!</button>
-          <button class="clearBtn w-32 h-10 bg-gray-200 rounded-lg text-black text-center font-semibold text-xl">Clear Cart</button>
+          <button class="nextBtn w-32 h-10 bg-gray-200 rounded-lg text-black text-center font-semibold text-xl">Next Item</button>          <button class="clearBtn w-32 h-10 bg-gray-200 rounded-lg text-black text-center font-semibold text-xl">Clear Cart</button>
 
         </div> 
     </div>
@@ -37,17 +38,28 @@ function GroceryStore() {
 
   const addBtn = document.querySelector(".addBtn");
   addBtn.addEventListener("click", () => {
-    const cart = [];
-    cart.push(item);
+    if (cart.some((food) => food.name === item.name)) {
+      alert("Already in Cart");
+    } else {
+      cart.push(item);
+      DOMs.cartcontainer.insertAdjacentHTML(
+        "beforeend",
+        `
+      <div class="card w-[15vw] h-[15vw] bg-peachpuff rounded-3xl flex flex-col items-center justify-evenly m-8 border-2 border-black">
+      <h1 class="text-4xl font-bold">${item.name}</h1>
+      <img src="${item.image}" alt="" class="w-[70%] h-[60%] object-fill rounded-lg shadow-md"/>
+        <div class="m-0">
+        </div> 
+    </div>
+      `
+      );
+    }
     refresh();
-    console.log(cart);
   });
 
   const clearBtn = document.querySelector(".clearBtn");
   clearBtn.addEventListener("click", () => {
-    cart = "";
+    DOMs.cartcontainer.innerHTML = "";
   });
 }
 GroceryStore();
-
-console.log(cart);

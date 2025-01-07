@@ -1,7 +1,7 @@
 import { GroceryItems } from "./products";
 import "../CSS/style.css";
 
-const cart = [];
+let cart = [];
 
 const DOMs = {
   container: document.querySelector(".container"),
@@ -37,8 +37,16 @@ function GroceryStore() {
   });
 
   const addBtn = document.querySelector(".addBtn");
+  let found = false;
+
   addBtn.addEventListener("click", () => {
-    if (cart.some((food) => food.name === item.name)) {
+    cart.forEach((food) => {
+      if (food.name === item.name) {
+        found = true;
+      }
+    });
+
+    if (found) {
       alert("Already in Cart");
     } else {
       cart.push(item);
@@ -60,6 +68,7 @@ function GroceryStore() {
   const clearBtn = document.querySelector(".clearBtn");
   clearBtn.addEventListener("click", () => {
     DOMs.cartcontainer.innerHTML = "";
+    cart = [];
   });
 }
 GroceryStore();
